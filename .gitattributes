@@ -1,0 +1,8 @@
+# Normalize line endings across operating systems.
+* text=auto eol=lf
+
+# The Windows wrapper script must keep CRLF endings.
+*.cmd text eol=crlf
+
+# Treat the Maven wrapper jar as binary.
+*.jar binary

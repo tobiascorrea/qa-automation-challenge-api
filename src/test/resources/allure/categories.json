@@ -1,0 +1,25 @@
+[
+  {
+    "name": "Ignored tests",
+    "matchedStatuses": ["skipped"]
+  },
+  {
+    "name": "API contract issues",
+    "messageRegex": ".*status.*|.*message.*|.*Content type.*",
+    "matchedStatuses": ["failed"]
+  },
+  {
+    "name": "Performance regressions",
+    "messageRegex": ".*response time.*",
+    "matchedStatuses": ["failed"]
+  },
+  {
+    "name": "Infrastructure / network problems",
+    "messageRegex": ".*Connection.*|.*timeout.*|.*UnknownHost.*",
+    "matchedStatuses": ["broken"]
+  },
+  {
+    "name": "Product defects",
+    "matchedStatuses": ["failed"]
+  }
+]

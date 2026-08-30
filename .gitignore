@@ -1,0 +1,33 @@
+# Maven build output
+target/
+
+# Allure
+.allure/
+allure-results/
+allure-report/
+
+# Maven wrapper downloaded distribution cache
+.mvn/wrapper/maven-wrapper.jar.lck
+
+# IDE - IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# IDE - Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# IDE - VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
