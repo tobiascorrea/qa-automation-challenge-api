@@ -106,7 +106,8 @@ e asserções de negócio.
 │       ├── config.properties                   # Configuração padrão
 │       ├── allure.properties
 │       ├── logback-test.xml
-│       └── allure/categories.json              # Taxonomia de falhas do Allure
+│       ├── allure/categories.json              # Taxonomia de falhas do Allure
+│       └── schemas/                            # JSON Schemas dos contratos de resposta
 └── README.md
 ```
 
@@ -190,11 +191,12 @@ O relatório inclui:
 ### Relatório de execução mais recente
 
 ```
-Tests run: 18, Failures: 0, Errors: 0, Skipped: 0
+Tests run: 36, Failures: 0, Errors: 0, Skipped: 0
 
-- BreedImagesTest .... 8 testes  ✔
-- BreedsListTest ..... 5 testes  ✔
-- RandomImageTest .... 5 testes  ✔
+- BreedImagesTest .... 17 testes  ✔
+- ApiContractTest .... 7 testes   ✔
+- BreedsListTest ..... 6 testes   ✔
+- RandomImageTest .... 6 testes   ✔
 ```
 
 ---
@@ -223,7 +225,9 @@ Exemplo de sobrescrita:
 
 ## Cenários de teste
 
-A suíte cobre cenários **positivos**, **negativos**, **data-driven** e de **performance leve**.
+A suíte cobre cenários **positivos**, **negativos**, **data-driven**, **de contrato
+(JSON Schema)** e de **performance leve**. Cada um dos três endpoints tem validação de
+**schema** e de **contrato** (status code, estrutura da resposta e content-type).
 
 ### `GET /breeds/list/all` — `BreedsListTest`
 - Retorna `200` com corpo JSON e `status = success`.
@@ -231,17 +235,31 @@ A suíte cobre cenários **positivos**, **negativos**, **data-driven** e de **pe
 - Contém raças conhecidas e estáveis (`hound`, `bulldog`, `retriever`).
 - Sub-raças de `bulldog` são uma lista válida e sem entradas em branco.
 - Responde dentro de um tempo aceitável (guard de regressão de performance).
+- **Schema:** a resposta valida contra `schemas/breeds-list-schema.json`.
 
 ### `GET /breed/{breed}/images` — `BreedImagesTest`
 - **Positivo:** raça válida retorna `200` e lista não vazia de imagens.
 - **Formato:** toda URL retornada é uma URL de imagem válida (regex).
 - **Data-driven:** múltiplas raças conhecidas retornam imagens (`@ParameterizedTest`).
 - **Negativo:** raça inexistente retorna `404` com `status = error`.
+- **Negativo data-driven:** entradas inválidas (nome com espaço, numérico, desconhecido,
+  caracteres especiais) retornam `404`.
+- **Contrato de erro:** o `404` é JSON, com `status = error` e `message` não nulo.
+- **Comportamento documentado:** a busca por raça é *case-insensitive*
+  (`HOUND`, `Hound`, `hOuNd` retornam o mesmo dataset de `hound`).
+- **Schema:** a resposta valida contra `schemas/image-list-schema.json`.
 
 ### `GET /breeds/image/random` — `RandomImageTest`
 - Retorna `200`, `status = success` e uma única URL de imagem.
 - A URL retornada é uma URL de imagem válida.
 - Chamadas repetidas retornam imagens válidas de forma consistente (`@RepeatedTest`).
+- **Schema:** a resposta valida contra `schemas/random-image-schema.json`.
+
+### Contrato transversal e rotas desconhecidas — `ApiContractTest`
+- Rotas inexistentes retornam `404` (data-driven).
+- Um `404` com corpo JSON respeita o contrato de erro (`status = error`).
+- Todos os endpoints de sucesso respondem `200` com content-type `application/json`
+  (data-driven cobrindo os três endpoints).
 
 ---
 
@@ -275,9 +293,9 @@ do CI — graças ao Maven Wrapper.
   roda em qualquer ambiente apenas trocando propriedades.
 - **POJOs tipados.** As respostas são desserializadas em modelos, o que torna as
   asserções mais seguras e legíveis do que navegar sempre pelo JSON cru.
-- **Asserções de contrato + formato + comportamento.** Além do status HTTP, validamos o
-  envelope (`status`), o formato dos dados (URLs de imagem) e o comportamento negativo
-  (`404` para raça inexistente).
+- **Asserções de contrato + formato + comportamento.** Além do status HTTP, validamos a
+  estrutura da resposta (`status`), o formato dos dados (URLs de imagem) e o comportamento
+  negativo (`404` para raça inexistente).
 - **Relatório autossuficiente.** `environment.properties` e `categories.json` são
   escritos programaticamente, garantindo metadados e taxonomia de falhas em qualquer máquina.
 

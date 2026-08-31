@@ -14,6 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyOrNullString;
 import static org.hamcrest.Matchers.is;
@@ -42,6 +43,17 @@ class RandomImageTest extends BaseTest {
         assertThat("status", body.getStatus(), is(ApiStatus.SUCCESS.value()));
         assertThat("image url", body.getMessage(), is(not(emptyOrNullString())));
         assertThat("image url is https", body.getMessage(), startsWith("https://"));
+    }
+
+    @Test
+    @Story("Fetch a random image")
+    @Severity(SeverityLevel.CRITICAL)
+    @DisplayName("Response should match the JSON schema contract")
+    @Description("Locks the response contract: single image URL string + success status.")
+    void shouldMatchJsonSchema() {
+        breedsClient.getRandomImage()
+                .then()
+                .body(matchesJsonSchemaInClasspath("schemas/random-image-schema.json"));
     }
 
     @Test

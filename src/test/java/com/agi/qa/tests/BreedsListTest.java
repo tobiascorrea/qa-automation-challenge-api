@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Map;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.everyItem;
 import static org.hamcrest.Matchers.greaterThan;
@@ -34,7 +35,7 @@ class BreedsListTest extends BaseTest {
     @Story("List all breeds")
     @Severity(SeverityLevel.CRITICAL)
     @DisplayName("Should return 200 with a JSON body and success status")
-    @Description("Verifies the endpoint responds successfully and follows the expected envelope.")
+    @Description("Verifies the endpoint responds successfully and follows the expected response structure.")
     void shouldReturnSuccessfulResponse() {
         Response response = breedsClient.listAllBreeds();
 
@@ -97,5 +98,16 @@ class BreedsListTest extends BaseTest {
         Response response = breedsClient.listAllBreeds();
 
         assertThat("response time (ms)", response.time(), is(lessThan(5000L)));
+    }
+
+    @Test
+    @Story("List all breeds")
+    @Severity(SeverityLevel.CRITICAL)
+    @DisplayName("Response should match the JSON schema contract")
+    @Description("Locks the response contract: breeds map + success status, validated against a JSON schema.")
+    void shouldMatchJsonSchema() {
+        breedsClient.listAllBreeds()
+                .then()
+                .body(matchesJsonSchemaInClasspath("schemas/breeds-list-schema.json"));
     }
 }

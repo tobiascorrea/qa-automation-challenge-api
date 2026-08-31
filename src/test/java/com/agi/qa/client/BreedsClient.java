@@ -65,4 +65,22 @@ public class BreedsClient {
                 .extract()
                 .response();
     }
+
+    /**
+     * {@code GET} against an arbitrary path (relative to the configured base
+     * path). Useful for negative scenarios such as hitting a non-existent
+     * endpoint, where a domain-specific method would not make sense.
+     *
+     * @param path relative path, e.g. {@code /breeds/list/nope}
+     */
+    @Step("GET arbitrary path '{path}'")
+    public Response get(String path) {
+        return given()
+                .spec(SpecFactory.request())
+                .when()
+                .get(path)
+                .then()
+                .extract()
+                .response();
+    }
 }

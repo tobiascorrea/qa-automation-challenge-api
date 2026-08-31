@@ -1,0 +1,19 @@
+{
+  "title": "Breeds list response",
+  "type": "object",
+  "required": ["message", "status"],
+  "properties": {
+    "message": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["success"]
+    }
+  }
+}
