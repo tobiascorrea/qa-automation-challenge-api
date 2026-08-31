@@ -269,11 +269,12 @@ automaticamente em `push` e `pull_request` para `main`/`master`, e também sob d
 
 1. Configura o **JDK 21** (Temurin) com cache de dependências Maven.
 2. Roda a suíte com `./mvnw -B test`.
-3. Publica como **artefatos**: relatórios Surefire, `allure-results` e o HTML do Allure.
-4. No branch `main`, publica o **relatório Allure no GitHub Pages**.
+3. Gera o relatório HTML do Allure com `./mvnw -B allure:report`.
+4. Publica como **artefatos** para download: relatórios Surefire, `allure-results` (dados
+   brutos) e `allure-report` (HTML navegável).
 
-> Para habilitar a publicação no GitHub Pages: em *Settings → Pages*, selecione
-> **GitHub Actions** como source.
+> **Como visualizar o relatório do CI:** na aba **Actions**, abra a execução desejada,
+> baixe o artefato **`allure-report`** e abra o `index.html` no navegador.
 
 O código é executável em **Linux, Windows e macOS** — tanto localmente quanto no runner
 do CI — graças ao Maven Wrapper.
