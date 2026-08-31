@@ -6,12 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Response of {@code GET /breeds/list/all}.
- *
- * <p>The {@code message} is a map where each key is a breed and the value is
- * the list of its sub-breeds (possibly empty).
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BreedsListResponse {
 

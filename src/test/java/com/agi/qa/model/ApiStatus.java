@@ -1,8 +1,5 @@
 package com.agi.qa.model;
 
-/**
- * The {@code status} field returned by every Dog API response.
- */
 public enum ApiStatus {
     SUCCESS("success"),
     ERROR("error");

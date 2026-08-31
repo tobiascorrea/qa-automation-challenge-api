@@ -2,11 +2,6 @@ package com.agi.qa.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- * Response of {@code GET /breeds/image/random}.
- *
- * <p>The {@code message} is a single image URL.
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RandomImageResponse {
 

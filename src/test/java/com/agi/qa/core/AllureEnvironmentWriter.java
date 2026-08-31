@@ -12,21 +12,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
-/**
- * Writes the Allure {@code environment.properties} and {@code categories.json}
- * into the results directory so the generated report carries meaningful
- * metadata and a consistent defect taxonomy on any machine.
- *
- * <p>Doing this in code (rather than relying on a manual file copy) keeps the
- * report self-contained and reproducible in CI.
- */
 public final class AllureEnvironmentWriter {
 
     private static final String RESULTS_DIR =
             System.getProperty("allure.results.directory", "target/allure-results");
 
     private AllureEnvironmentWriter() {
-        // Utility class - not instantiable.
     }
 
     public static void write() {
@@ -36,7 +27,6 @@ public final class AllureEnvironmentWriter {
             writeEnvironment(resultsDir);
             copyCategories(resultsDir);
         } catch (IOException e) {
-            // Reporting metadata is best-effort; never fail the suite for it.
             System.err.println("Could not write Allure metadata: " + e.getMessage());
         }
     }

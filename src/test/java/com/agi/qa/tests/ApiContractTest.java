@@ -23,11 +23,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
-/**
- * Cross-cutting contract and negative scenarios that are not specific to a
- * single breed endpoint - e.g. hitting unknown routes and confirming the API
- * fails gracefully and consistently.
- */
 @Epic("Dog API")
 @Feature("API Contract & Negative Scenarios")
 @DisplayName("API contract")

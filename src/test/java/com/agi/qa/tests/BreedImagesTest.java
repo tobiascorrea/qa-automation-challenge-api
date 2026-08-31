@@ -150,7 +150,6 @@ class BreedImagesTest extends BaseTest {
                 variant.jsonPath().getString("status"), equalToIgnoringCase(ApiStatus.SUCCESS.value()));
         assertThat("image count for '" + breed + "'",
                 variant.jsonPath().getList("message").size(), is(greaterThan(0)));
-        // Case variants should resolve to the same underlying dataset as the canonical breed.
         assertThat("same dataset size as canonical 'hound'",
                 variant.jsonPath().getList("message").size(),
                 is(canonical.jsonPath().getList("message").size()));

@@ -5,11 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Response of {@code GET /breed/{breed}/images}.
- *
- * <p>The {@code message} is the list of image URLs for the requested breed.
- */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ImageListResponse {
 
