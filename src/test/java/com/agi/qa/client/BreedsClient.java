@@ -7,23 +7,8 @@ import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
 
-/**
- * Service client for the Dog API breed endpoints.
- *
- * <p>This is the <b>only</b> layer that talks to RestAssured. Tests interact
- * with the API exclusively through these domain-oriented methods, which keeps
- * the HTTP concerns (base URI, paths, specs, filters) out of the test logic
- * and makes the suite easy to maintain and evolve.
- *
- * <p>Each method returns the raw {@link Response} so the test layer stays in
- * charge of assertions, while the {@code @Step} annotations enrich the Allure
- * report with a readable, business-level call log.
- */
 public class BreedsClient {
 
-    /**
-     * {@code GET /breeds/list/all} - retrieve every breed and its sub-breeds.
-     */
     @Step("List all breeds")
     public Response listAllBreeds() {
         return given()
@@ -35,11 +20,6 @@ public class BreedsClient {
                 .response();
     }
 
-    /**
-     * {@code GET /breed/{breed}/images} - retrieve all images for a breed.
-     *
-     * @param breed breed name as used by the API (e.g. {@code hound})
-     */
     @Step("Get images for breed '{breed}'")
     public Response getBreedImages(String breed) {
         return given()
@@ -52,9 +32,6 @@ public class BreedsClient {
                 .response();
     }
 
-    /**
-     * {@code GET /breeds/image/random} - retrieve a single random image.
-     */
     @Step("Get a random dog image")
     public Response getRandomImage() {
         return given()
@@ -66,13 +43,6 @@ public class BreedsClient {
                 .response();
     }
 
-    /**
-     * {@code GET} against an arbitrary path (relative to the configured base
-     * path). Useful for negative scenarios such as hitting a non-existent
-     * endpoint, where a domain-specific method would not make sense.
-     *
-     * @param path relative path, e.g. {@code /breeds/list/nope}
-     */
     @Step("GET arbitrary path '{path}'")
     public Response get(String path) {
         return given()
