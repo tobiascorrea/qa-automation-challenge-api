@@ -7,9 +7,7 @@ O objetivo é garantir a qualidade da integração com a Dog API: validar que os
 respondem corretamente, que os dados retornados estão no formato esperado e que a aplicação
 se comporta adequadamente em cenários positivos e negativos.
 
-[![API Tests](https://github.com/SEU_USUARIO/qa-automation-challenge-api/actions/workflows/api-tests.yml/badge.svg)](https://github.com/SEU_USUARIO/qa-automation-challenge-api/actions/workflows/api-tests.yml)
-
-> Substitua `SEU_USUARIO` pela sua conta do GitHub após publicar o repositório.
+[![API Tests](https://github.com/tobiascorrea/qa-automation-challenge-api/actions/workflows/api-tests.yml/badge.svg)](https://github.com/tobiascorrea/qa-automation-challenge-api/actions/workflows/api-tests.yml)
 
 ---
 
